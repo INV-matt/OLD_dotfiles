@@ -3,8 +3,7 @@ window:
     x: 5
     y: 5
 
-background_opacity: 0.5
-
+background_opacity: 0.85
 font:
   normal:
     family: "JetBrainsMono Nerd Font Mono"
