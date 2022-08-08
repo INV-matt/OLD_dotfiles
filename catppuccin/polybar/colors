@@ -1,0 +1,26 @@
+[color]
+bg = #802e3440      
+bg-alt = #424A59
+fg = #80A1C0
+primary = #80A1C0
+secondary = #5D84A6
+alert = #F28FAD
+disabled = #6E6C7E
+tp = #00000000
+
+bg0 = #24273a
+bg1 = #181926
+bg2 = #1e2030
+fg1 = #b8c0e0
+fg0 = #cad3f5
+yellow = #eed49f
+orange = #f5a97f
+red = #ed8796
+magenta = #b48ead
+violet = #c6a0f6
+blue = #8aadf4
+cyan = #7dc4e4
+green = #a6da95
+redbackup = #f92672 
+violetbackup = #ae81ff
+fg0backup = #f8f8f2
