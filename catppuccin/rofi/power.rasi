@@ -30,14 +30,20 @@ configuration {
     border-color: @bg-alt;
 } */
 
+
+
 window {
     width: 20%;
-    border: 2;
+    border: 2px;
+    border-radius: 25px;
+    background-color: @bg;
 }
 
 element {
     padding: 30 10;
     text-color: @fg-alt;
+    border-radius: 25px;
+    background-color: @bg-alt;
 }
 
 element-selected {
@@ -47,8 +53,9 @@ element-selected {
 element-text {
     background-color: inherit;
     text-color: inherit;
+    text-align: center;
     vertical-align: 0.5;
-    font: "JetBrainsMono 12";
+    font: "JetBrainsMono Nerd 24";
 }
 
 element-icon {
@@ -74,12 +81,14 @@ prompt {
 }
 
 listview {
-    lines: 2;
-    columns: 2;
+    lines: 1;
+    columns: 4;
     background-color: @bg;    
 }
 
 element.selected {
-    background-color: @bg-selected;
-    text-color:       @fg-selected;
+    background-color: @bg;
+    border: 4px;
+    border-color: @bg-alt;
+    text-color:       @fg;
 }

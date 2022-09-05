@@ -1,17 +1,17 @@
 *{
-    bg: #24273a;
-    bg-alt: #181926;
+    bg: #2E3440;
+    bg-alt: #424A59;
     bg-selected: @bg-alt;
 
-    fg: #cad3f5;
-    fg-alt: #a5adcb;
+    fg: #83A2C1;
+    fg-alt: #5E81AB;
     fg-selected: @fg;
     
 
     background-color: @bg;
 
     border: 0;
-    margin: 2;
+    margin: 0;
     padding: 0;
     spacing: 2;
 }

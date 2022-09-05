@@ -4,7 +4,7 @@ configuration {
     display-run: " Run";
     drun-display-format: "{icon} {name}";
     font: "Hack Regular 10";
-    modi: "window,drun,run";
+    modi: "drun,window,run";
     show-icons: true;
     icon-theme: "Papirus";
 }
@@ -29,8 +29,15 @@ configuration {
     spacing: 2;
 } */
 
+
+mainbox {
+	children: [inputbar, listview];
+}
+
 window {
     width: 25%;
+	transparency: "real";
+    border-radius: 25px;
 }
 
 element {
@@ -56,7 +63,10 @@ entry {
     background-color: @bg-alt;
     padding: 12;
     text-color: @fg;
+    border-radius: 25px;
 }
+
+
 
 inputbar{
     children: [prompt, entry];
@@ -67,6 +77,7 @@ prompt {
     padding: 12;
     text-color: @fg;
     font: "Hack Bold 12";
+    border-radius: 25px;
 }
 
 listview {
@@ -78,5 +89,6 @@ listview {
 element.selected {
     background-color: @bg-selected;
     text-color:       @fg-selected;
+    border-radius: 10px;
 }
 
