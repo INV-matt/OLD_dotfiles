@@ -1,0 +1,17 @@
+*{
+    bg: #2E3440;
+    bg-alt: #424A59;
+    bg-selected: @bg-alt;
+
+    fg: #83A2C1;
+    fg-alt: #5E81AB;
+    fg-selected: @fg;
+    
+
+    background-color: @bg;
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 2;
+}
