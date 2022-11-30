@@ -1,0 +1,342 @@
+; VARS
+
+(defvar eww "/usr/bin/eww")
+
+(defpoll sysvol :interval "500ms" "./scripts/volume.sh sysvol")
+
+
+; A bunch of system polls
+(defpoll hour :interval "1s" :initial "00" `date +%H`)
+(defpoll mins :interval "1s" :initial "00" `date +%M`)
+
+(defpoll outputs :interval "0.1s" :initial "[]" `echo $(python3 ./scripts/workspaces.py) | cut -d "!" -f2`)
+
+(defpoll volpercent :interval ".2s" `echo $(python3 ./scripts/my_vol.py get)` )
+(defpoll volicon :interval ".2s" `echo $(python3 ./scripts/my_vol.py icon)` )
+
+(defpoll title :interval ".2s" `echo $(python3 ./scripts/music.py --title)` )
+(defpoll artist :interval ".2s" `echo $(python3 ./scripts/music.py --artist)` )
+(defpoll playpause :interval ".2s" `echo $(python3 ./scripts/music.py --icon)` )
+(defpoll music_art :interval ".2s" `echo $(python3 ./scripts/music.py --art)` )
+
+
+
+
+
+
+
+
+
+; WIDGETS
+
+(defwidget launcher []
+  (box :orientation "v"
+    :space-evenly "true"
+    :spacing 0
+    (button :class "icon hov"
+      :onclick "rofi -no-lazy-grab -show drun &"
+      (label :text "" :style "background-color: rgba(0,0,0,0);")))
+)
+
+(defwidget powermenu []
+  (box
+    :class "powermenu"
+    :orientation "vertical"
+    :valin "fill"
+    :halign "fill"
+    :vexpand true
+    :hexpand true
+    
+    (button :class "icon hov"
+      :onclick "powermenu.sh"
+      (label :text "" :style "background-color: rgba(0,0,0,0);"))
+  )
+)
+
+
+;(defwidget my_vol []
+  ;
+  ;  (eventbox
+    ;    :orientation "v"
+    ;    :space-evenly true
+    ;    :valign "fill"
+    ;    :onhover "${eww} update vol_open=true"
+    ;    :onhoverlost "${eww} update vol_open=false"
+    ;
+    ;    (box		:orientation "v"
+      ;      :space-evenly "false"
+      ;      :vexpand "false"
+      ;      :valign "end"
+      ;
+      ;      (revealer	:transition "slideup"
+        ;        :reveal vol_open
+        ;        :duration "550ms"
+        ;        :valign "end"
+        ;
+        ;
+        ;        (label :text "${volpercent}%")
+      ;      )
+      ;
+      ;      (button
+        ;        :onclick "python3 ./scripts/my_vol.py mute "
+        ;        :valign "end"
+        ;
+        ;        (label :text volicon :class "icon")
+      ;      )
+    ;    )
+    ;
+  ;  )
+;)
+;(defvar vol_open false)
+
+(defwidget my_vol []
+  (box
+    (button
+      :onclick "python3 ./scripts/my_vol.py mute "
+      :valign "end"
+      
+      (label :text volicon :class "icon")
+    )
+    (label :text volpercent)
+  )
+  
+  
+  
+)
+(defvar vol_open false)
+
+
+(defwidget bar_music []
+  (box
+    (button
+      :onclick "eww open-many w_music"
+      :onrightclick "eww close w_music"
+      
+      (label :class "icon" :text "")
+    )
+  )
+)
+
+
+
+(defwidget clock []
+  (box
+    :class "clock"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "fill"
+    :space-evenly false
+    :vexpand false
+    (label :text hour :class "hour")
+    (label :text mins :class "mins")
+  )
+)
+
+(defwidget workspaces []
+  (box
+    :orientation "vertical"
+    :valign "start"
+    :class "workspaces"
+    
+    (for output in outputs
+      (box
+        :orientation "vertical"
+        :class "workspace"
+        (box
+          :halign "center"
+          :class "output"
+          :orientation "v"
+          
+          (for wk in "${output['wks']}"
+            (label
+              ;:text "${wk['name']}"
+              ;:style "color: ${wk['focused'] ? '#bd93f9' : '#f8f8f2'}"
+              :text "${wk['focused'] ? '' : ''}"
+              :class "${wk['focused'] ? 'ws_focused' : ''}"
+              
+            )
+          )
+        )
+        
+        ;(label
+          ;  :text "───"
+          ;  :class "sep"
+        ;)
+      )
+    )
+  )
+  
+)
+
+
+
+
+(defwidget music []
+  (box
+    :orientation "h"
+    :space-evenly "false"
+    :spacing 10
+    :halign "fill"
+    :valign "fill"
+    :class "music_container"
+    :hexpand "false"
+    :vexpand "false"
+    
+    (box
+      :style "background-image: url('${ music_art }'); background-position: center;"
+      :class "music_art"
+      :vexpand "false"
+      :hexpand "false"
+    )
+    (box
+      :class "music-player"
+      :orientation "v"
+      :valign "fill"
+      :halign "fill"
+      
+      (box
+        :orientation "v"
+        :class "music_info"
+        :valign "fill"
+        :halign "fill"
+        :vepand true
+        (label
+          :class "title"
+          :limit-width 20
+          :text title
+        )
+        (label
+          :class "artist"
+          :limit-width 20
+          :text artist
+        )
+      )
+      (box
+        :orientation "h"
+        :space-evenly "false"
+        :valign "center"
+        :halign "center"
+        :spacing 25
+        (button :onclick "playerctl previous" (label :class "prev" :text "玲"))
+        (button :onclick "playerctl play-pause" (label :class "plpause" :text playpause))
+        (button :onclick "playerctl next" (label :class "next" :text "怜"))
+      )
+      
+    )
+    
+    
+  )
+)
+
+
+
+
+
+
+
+(defwidget top []
+  (box
+    :class "top"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "start"
+    :vexpand false
+    :hexpand false
+    :space-evenly false
+    
+    (launcher)
+    (workspaces)
+  )
+)
+
+(defwidget mid []
+  (box
+    :class "mid"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "center"
+    :vexpand true
+    :hexpand false
+    
+  )
+)
+
+(defwidget bottom []
+  (box
+    :class "bottom"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "end"
+    :vexpand false
+    :hexpand false
+    
+    (bar_music)
+    ;(my_vol)
+    (clock)
+    (powermenu)
+  )
+)
+
+(defwidget bar []
+  (box
+    :class "bar"
+    :orientation "vertical"
+    :halign "fill"
+    :vexpand false
+    :hexpand false
+    (top)
+    (mid)
+    (bottom)
+  )
+)
+
+(defwidget mus_widget []
+  (box
+    :class "music_widget"
+    :space-evenly false
+    :orientation "v"
+    ;(my_vol)
+    (music)
+  )
+)
+
+
+
+; WINDOWS
+
+(defwindow ewwbar
+  :monitor 0
+  :geometry (geometry
+    :x "5px" :y "0px"
+    :width "50px" :height "96%"
+    :anchor "left center"
+  )
+  
+  :stacking "bg"
+  :focusable true
+  :wm-ignore true
+  :vexpand false
+  :hexpand false
+  
+  (bar)
+)
+
+(defwindow w_music
+  :monitor 0
+  :geometry (geometry
+    :x "65px" :y "-11px"
+    :width "300px" :height "200px"
+    :anchor "left bottom"
+  )
+  
+  :stacking "bg"
+  :focusable true
+  :wm-ignore true
+  :vexpand true
+  :hexpand false
+  (mus_widget)
+)
+
+
+
+

@@ -1,0 +1,229 @@
+$fg: #e0def4;
+$fg1: #908caa;
+$bg: #191724;
+$bg1: #1f1d2e;
+$bg2: #26233a;
+$red: #eb6f92;
+$yellow: #f6c177;
+$pink: #ebbcba;
+$teal: #31748f;
+$cyan: #9ccfd8;
+$violet: #c4a7e7;
+$highlight_high: #524f67;
+
+* {
+  background: rgba($color: $bg, $alpha: 0);
+  //color: $foreground;
+  //border: 1px solid $red;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  color: $fg;
+}
+label {
+  color: $fg;
+}
+
+.bar {
+  border-radius: 10px;
+  padding: 15px 0;
+  background-color: rgba($color: $bg, $alpha: 1);
+  padding: 5px;
+}
+
+.icon {
+  font-size: 40px;
+}
+
+.hov:hover {
+  background-color: $teal;
+}
+
+.workspace {
+  font-size: 18px;
+}
+
+.workspaces {
+  margin: 0;
+  //border: 1px solid red;
+}
+.works {
+  @extend .workspace;
+}
+
+.wks_occ {
+  color: #eb6f92;
+}
+
+.hour,
+.mins {
+  padding-right: 2px;
+  padding-left: 2px;
+  font-size: 20px;
+}
+
+// WIDGET
+
+.time {
+  background-color: $bg;
+  padding: 16px;
+}
+.hm_time {
+  font-size: 28px;
+}
+
+.music_container {
+  background-color: $bg1;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.music_art {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+  min-height: 80px;
+  min-width: 80px;
+  margin: 20px;
+  border-radius: 16px;
+}
+.widgets {
+  background-color: $bg;
+  border-radius: 16px;
+  padding: 16px;
+}
+.music_player {
+  background-position: center;
+  padding: 10px;
+}
+.music_info {
+  padding: 0;
+  margin-bottom: 0px;
+}
+.title {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 18px;
+}
+.artist {
+  font-style: italic;
+  font-size: 16px;
+}
+
+.prev,
+.plpause,
+.next {
+  @extend .icon;
+  padding: 0 16px;
+}
+
+.prev:hover,
+.plpause:hover,
+.next:hover {
+  background-color: $highlight_high;
+}
+
+.profile {
+  background-color: $bg1;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.pfp {
+  background-image: url("./assets/pfp.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 64px;
+  min-width: 64px;
+  margin: 20px;
+  border-radius: 100px;
+}
+.p_name {
+  font-size: 24px;
+  font-weight: bold;
+}
+.quote {
+  padding: 5px;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.stats_container {
+  background-color: $bg1;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+scale {
+  trough {
+    all: unset;
+    background-color: $bg;
+    min-height: 16px;
+    border-radius: 15px;
+    margin-right: 25px;
+  }
+  highlight {
+    all: unset;
+    background-color: $teal;
+    border-radius: 100px;
+  }
+
+  slider {
+    border: 0px;
+  }
+}
+
+.scale-cpu {
+  highlight {
+    background: $red;
+  }
+}
+.scale-mem {
+  highlight {
+    background: $yellow;
+  }
+}
+.scale-vol {
+  highlight {
+    background: $violet;
+  }
+}
+
+.stat_icon {
+  font-size: 24px;
+  color: $cyan;
+}
+.info_btns {
+  margin: 0;
+}
+.pc_info {
+  background-color: $bg1;
+  border-radius: 16px;
+  padding: 4px 48px;
+}
+
+.l_info {
+  font-size: 16px;
+}
+
+.btns {
+  background-color: $bg1;
+  border-radius: 16px;
+  padding: 16px;
+}
+.btn {
+  background-color: $bg;
+
+  @extend .icon;
+}
+.btn:hover {
+  background-color: $teal;
+}
+.btn:active {
+  background-color: $teal;
+}

@@ -1,0 +1,89 @@
+$foreground: #f4f4f4;
+$background: #2c2a39;
+$color0: #363346;
+$color1: #702a33;
+$color2: #8c9440;
+$color3: #d77d72;
+$color4: #4c8e9d;
+$color5: #a75f95;
+$color6: #19c9b8;
+$color7: #b3bfc9;
+$color8: #474455;
+$color9: #914d56;
+$color10: #b5bd68;
+$color11: #f7ab73;
+$color12: #81c2d1;
+$color13: #c378b0;
+$color14: #2ef2df;
+$color15: #f4f4f4;
+
+* {
+  background: rgba($color: $background, $alpha: 0);
+  //color: $foreground;
+  //border: 1px solid $color2;
+}
+
+.bar {
+  border-radius: 10px;
+  padding: 15px 0;
+  background-color: rgba($color: $background, $alpha: 1);
+  padding: 5px;
+}
+
+.icon {
+  font-size: 40px;
+}
+
+.hov:hover {
+  background-color: $color4;
+}
+
+.workspace {
+  font-size: 18px;
+}
+
+.workspaces {
+  margin: 0;
+  //border: 1px solid red;
+}
+
+.hour,
+.mins {
+  padding-right: 2px;
+  padding-left: 2px;
+  font-size: 20px;
+}
+
+// MUSIC WIDGET
+.music_art {
+  background-size: cover;
+  min-height: 236px;
+  min-width: 236px;
+  margin: 20px;
+  border-radius: 10px;
+}
+.music_widget {
+  background-color: $background;
+}
+.music-player {
+  background-color: rgba($background, 0.5);
+  background-position: center;
+  padding: 20px;
+}
+.music_info {
+  padding: 0;
+  margin-bottom: 20px;
+}
+.title {
+  font-weight: bolder;
+  font-size: 24px;
+}
+.artist {
+  font-style: italic;
+  font-size: 16px;
+}
+.prev,
+.plpause,
+.next {
+  @extend .icon;
+}

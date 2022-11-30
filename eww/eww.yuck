@@ -1,0 +1,420 @@
+; VARS
+
+(defvar eww "/usr/bin/eww")
+
+; A bunch of system polls
+(defpoll hour :interval "1s" :initial "00" `date +%H`)
+(defpoll mins :interval "1s" :initial "00" `date +%M`)
+(defpoll my_date :interval "1s" `echo $(python3 /home/matteo/.config/eww/scripts/sys_info.py --date)`)
+
+;(defpoll outputs :interval "0.1s" :initial "[]" `echo $(python3 ./scripts/workspaces.py) | cut -d "!" -f2`)
+
+(defpoll volpercent :interval ".1s" `echo $(python3 /home/matteo/.config/eww/scripts/my_vol.py get)` )
+(defpoll volicon :interval ".1s" `echo $(python3 /home/matteo/.config/eww/scripts/my_vol.py icon)` )
+
+(defpoll title :interval ".5s" `echo $(python3 /home/matteo/.config/eww/scripts/music.py --title)` )
+(defpoll artist :interval ".5s" `echo $(python3 /home/matteo/.config/eww/scripts/music.py --artist)` )
+(defpoll playpause :interval ".2s" `echo $(python3 /home/matteo/.config/eww/scripts/music.py --icon)` )
+(defpoll music_art :interval ".5s" `echo $(python3 /home/matteo/.config/eww/scripts/music.py --art)` )
+
+(defpoll cpu :interval "1s" `echo $(python3 /home/matteo/.config/eww/scripts/sys_info.py --cpu)`)
+(defpoll mem :interval "1s" `echo $(python3 /home/matteo/.config/eww/scripts/sys_info.py --mem)`)
+(defpoll up :interval "1s" `echo $(python3 /home/matteo/.config/eww/scripts/sys_info.py --up)`)
+(defpoll pack :interval "1s" `pacman -Q | wc -l`)
+
+(deflisten workspace "./scripts/bspwmWs.sh")
+
+
+
+
+
+
+; WIDGETS
+
+(defwidget launcher []
+  (box :orientation "v"
+    :space-evenly "true"
+    :spacing 0
+    (button :class "icon hov"
+      :onclick "eww open-many widgets"
+      :onrightclick "eww close widgets"
+      (label :text "" :style "background-color: rgba(0,0,0,0);")))
+)
+
+(defwidget powermenu []
+  (box
+    :class "powermenu"
+    :orientation "vertical"
+    :valin "fill"
+    :halign "fill"
+    :vexpand true
+    :hexpand true
+    
+    (button :class "icon hov"
+      :onclick "sh /home/matteo/.local/bin/powermenu.sh"
+      (label :text "" ))
+  )
+)
+
+(defwidget my_vol []
+  (box
+    (button
+      :onclick "python3 ./scripts/my_vol.py mute "
+      :valign "end"
+      
+      (label :text volicon :class "icon")
+    )
+    (label :text volpercent)
+  ))
+(defvar vol_open false)
+
+(defwidget clock []
+  (box
+    :class "clock"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "fill"
+    :space-evenly false
+    :vexpand false
+    (label :text hour :class "hour")
+    (label :text mins :class "mins")
+  )
+)
+
+(defwidget i-workspaces [] ;i3 workspaces
+  (box
+    :orientation "vertical"
+    :valign "start"
+    :class "workspaces"
+    
+    (for output in outputs
+      (box
+        :orientation "vertical"
+        :class "workspace"
+        (box
+          :halign "center"
+          :class "output"
+          :orientation "v"
+          
+          (for wk in "${output['wks']}"
+            (label
+              :text "${wk['focused'] ? '' : ''}"
+              :class "${wk['focused'] ? 'ws_focused' : ''}"
+              
+            )))))))
+
+(defwidget workspaces [] ;BSPWM workspaces
+  (literal :content workspace)
+)
+
+(defwidget music []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :spacing -10
+    :halign "fill"
+    :valign "fill"
+    :class "music_container"
+    :hexpand "false"
+    :vexpand "false"
+    
+    
+    (box
+      :style "background-image: url('${ music_art }');"
+      :class "music_art"
+      :vexpand "false"
+      :hexpand "false"
+      :width "10px"
+    )
+    (box
+      :class "music_player"
+      :orientation "v"
+      :valign "center"
+      :halign "fill"
+      :width 200
+      :hexpand true
+      :space-evenly false
+      
+      (box
+        :orientation "v"
+        :class "music_info"
+        :valign "fill"
+        :halign "center"
+        :vepand false
+        :hexpand false
+        (label
+          :class "title"
+          :limit-width 20
+          :text title
+        )
+        ;(label
+          ;  :class "artist"
+          ;  :limit-width 20
+          ;  :text artist
+        ;)
+      )
+      (box
+        :orientation "h"
+        :space-evenly "false"
+        :valign "center"
+        :halign "center"
+        :spacing 36
+        (button :class "prev" :onclick "playerctl previous" (label  :text "玲"))
+        (button :class "plpause" :onclick "playerctl play-pause" (label :text playpause))
+        (button :class "next" :onclick "playerctl next" (label :text "怜"))
+      )
+    )
+  )
+)
+
+
+(defwidget time []
+  (box :class "time hm_time"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    (label :text "${hour}:${mins} | ${my_date}")
+  )
+)
+
+(defwidget profile []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :class "profile"
+    :halign "fill"
+    (box
+      :orientation "h"
+      :space-evenly false
+      (box
+        :class "pfp"
+        :width "10px"
+      )
+      (box
+        :class "p_name"
+        (label :text "INVmatt" )
+      ))
+    (box :class "quote"
+      (label :width 128
+        :wrap true
+      :text "“There will be a time when we must choose between what is easy and what is right”")
+    )
+  )
+)
+
+(defwidget pc_info []
+  (box :class "pc_info"
+    :orientation "v"
+    (box :class "info"
+      :orientation "h"
+      :space-evenly false
+      :spacing 16
+      (label :class "stat_icon" :text "")
+      (label :class "l_info" :text "arch")
+    )
+    (box :class "info"
+      :orientation "h"
+      :space-evenly false
+      :spacing 16
+      (label :class "stat_icon" :text "")
+      (label :class "l_info" :text "bspwm")
+    )
+    (box :class "info"
+      :orientation "h"
+      :space-evenly false
+      :spacing 16
+      (label :class "stat_icon" :text "")
+      (label :class "l_info" :text pack)
+    )
+    (box :class "info"
+      :orientation "h"
+      :space-evenly false
+      :spacing 16
+      (label :class "stat_icon" :text "")
+      (label :class "l_info" :text up)
+    )
+    (box :class "info"
+      :orientation "h"
+      :space-evenly false
+      :spacing 16
+      (label :class "stat_icon" :text "")
+      (label :class "l_info" :text "5600G")
+    )
+    
+  )
+)
+
+(defwidget btns []
+  (box :class "btns"
+    :orientation "v"
+    :spacing 16
+    :hexpand true
+    
+    (box
+      :orientation "h"
+      :spacing 16
+      (button :class "btn" :onclick "thunar ~ &" "")
+      (button :class "btn" :onclick "code" "")
+    )
+    (box
+      :orientation "h"
+      :spacing 16
+      (button :class "btn" :onclick "firefox " "")
+      (button :class "btn" :onclick "firefox -P Scuola &" "")
+    )
+    (box
+      :orientation "h"
+      :spacing 16
+      (button :class "btn" :onclick "discord &" "ﭮ")
+      (button :class "btn" :onclick "spotify &" "")
+    )
+  )
+)
+
+
+(defwidget info&btns []
+  (box :orientation "h"
+    :space-evenly false
+    :spacing 16
+    :class "info_btns"
+    (pc_info)
+    (btns)
+  )
+  
+)
+
+(defwidget stats []
+  (box :class "stats_container"
+    :orientation "v"
+    (box :class "stat"
+      :orientation "h"
+      :space-evenly false
+      (scale :min 0 :max 101 :active false :value cpu :class "scale-cpu" :width 400 )
+      (label :text "" :class "stat_icon")
+    )
+    (box :class "stat"
+      :orientation "h"
+      :space-evenly false
+      (scale :min 0 :max 101 :active false :value mem :class "scale-mem" :width 400 )
+      (label :text "﬙" :class "stat_icon")
+    )
+    (box       :class "stat "
+      :orientation "h"
+      :space-evenly "false"
+      (scale :min 0 :max 100 :active true :value volpercent :onchange "python3 /home/matteo/.config/eww/scripts/my_vol.py set {}" :class "scale-vol" :width 400 )
+      (eventbox
+        :onclick "python3 /home/matteo/.config/eww/scripts/my_vol.py mute"
+        (label :text volicon :class "stat_icon"))
+    )
+    
+  )
+)
+
+
+(defwidget top []
+  (box
+    :class "top"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "start"
+    :vexpand false
+    :hexpand false
+    :space-evenly false
+    
+    (launcher)
+    (workspaces)
+  )
+)
+
+(defwidget mid []
+  (box
+    :class "mid"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "center"
+    :vexpand true
+    :hexpand false
+    
+  )
+)
+
+(defwidget bottom []
+  (box
+    :class "bottom"
+    :orientation "vertical"
+    :halign "fill"
+    :valign "end"
+    :vexpand false
+    :hexpand false
+    
+    ;(my_vol)
+    (clock)
+    (powermenu)
+  )
+)
+
+(defwidget bar []
+  (box
+    :class "bar"
+    :orientation "vertical"
+    :halign "fill"
+    :vexpand false
+    :hexpand false
+    (top)
+    (mid)
+    (bottom)
+  )
+)
+
+(defwidget widgets []
+  (box
+    :class "widgets"
+    :space-evenly false
+    :orientation "v"
+    (time)
+    (profile)
+    (music)
+    (stats)
+    (info&btns)
+  )
+)
+
+
+
+; WINDOWS
+
+(defwindow ewwbar
+  :monitor 0
+  :geometry (geometry
+    :x "5px" :y "0px"
+    :width "50px" :height "96%"
+    :anchor "left center"
+  )
+  
+  :stacking "bg"
+  :focusable true
+  :vexpand false
+  :hexpand false
+  
+  :wm-ignore false
+  :reserve (struts :distance "60px" :side "left")
+  :exclusive true
+  
+  (bar)
+)
+
+(defwindow widgets
+  :monitor 0
+  :geometry (geometry
+    :x "65px" :y "0"
+    :width "300px" :height "200px"
+    :anchor "left center"
+  )
+  
+  :stacking "bg"
+  :focusable true
+  :wm-ignore true
+  :vexpand true
+  :hexpand false
+  (widgets)
+)
