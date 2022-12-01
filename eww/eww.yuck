@@ -7,7 +7,7 @@
 (defpoll mins :interval "1s" :initial "00" `date +%M`)
 (defpoll my_date :interval "1s" `echo $(python3 /home/matteo/.config/eww/scripts/sys_info.py --date)`)
 
-;(defpoll outputs :interval "0.1s" :initial "[]" `echo $(python3 ./scripts/workspaces.py) | cut -d "!" -f2`)
+(defpoll outputs :interval "0.1s" :initial "[]" `echo $(python3 ./scripts/workspaces.py) | cut -d "!" -f2`)
 
 (defpoll volpercent :interval ".1s" `echo $(python3 /home/matteo/.config/eww/scripts/my_vol.py get)` )
 (defpoll volicon :interval ".1s" `echo $(python3 /home/matteo/.config/eww/scripts/my_vol.py icon)` )
