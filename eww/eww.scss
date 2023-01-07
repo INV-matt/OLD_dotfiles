@@ -1,0 +1,333 @@
+$fg: #fbf1c7;
+$fg1: #ebdbb2;
+$bg: #282828;
+$bg1: #3c3836;
+$bg2: #504945;
+$red: #fb4934;
+$yellow: #fabd2f;
+$orange: #fe8019;
+$teal: #83a598;
+$cyan: #8ec07c;
+$violet: #d3869b;
+$highlight_high: #928374;
+$green: #b8bb26;
+$fg4: #a89984;
+$shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+  rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+* {
+  background: rgba($color: $bg, $alpha: 0);
+  //color: $foreground;
+  //border: 1px solid $red;
+}
+
+.box {
+  background-color: $bg2;
+  border-radius: 4px;
+  box-shadow: $shadow;
+  padding: 0 8px;
+}
+
+.d_widgets {
+  box-shadow: unset;
+  border: unset;
+  * {
+    all: unset;
+    font-size: 20px;
+    color: $fg;
+  }
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  color: $fg;
+}
+label {
+  color: $fg;
+}
+
+.bar {
+  border-radius: 0 0 4px 4px;
+  background-color: rgba($color: $bg, $alpha: 1);
+  padding: 4px 8px;
+}
+
+.icon {
+  font-size: 20px;
+  * {
+    margin: -12px;
+  }
+}
+
+.hov {
+  background-color: $bg2;
+}
+
+.hov:hover {
+  background-color: $violet;
+}
+
+.launcher {
+  border-radius: 4px;
+}
+
+.workspace {
+  font-size: 18px;
+}
+
+.workspaces {
+  margin: 0;
+  //border: 1px solid red;
+}
+.works {
+  @extend .workspace;
+
+  * {
+    font-size: 16px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    box-shadow: $shadow;
+  }
+}
+
+.nf * {
+  color: $fg4;
+}
+
+.focused {
+  background-color: $bg2;
+}
+
+.hour,
+.mins {
+  font-size: 16px;
+}
+
+.b_l_music {
+  font-size: 16px;
+}
+
+.reveal_stat {
+  background-color: $bg2;
+  border-radius: 4px;
+}
+
+.w_icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.f_win {
+  padding: 4px 8px;
+}
+
+// WIDGET
+
+.widgets {
+  background-color: rgba($bg, 0.5);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.time {
+  //background-color: $bg;
+  padding: 16px;
+}
+.hm_time {
+  font-size: 36px;
+}
+
+.music_container {
+  background-color: $bg1;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.music_art {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+  min-height: 80px;
+  min-width: 80px;
+  margin: 20px;
+  border-radius: 4px;
+}
+
+.music_player {
+  background-position: center;
+  padding: 10px;
+}
+.music_info {
+  padding: 0;
+  margin-bottom: 0px;
+}
+.title {
+  font-weight: bold;
+  //  font-style: italic;
+  font-size: 24px;
+}
+.artist {
+  font-style: italic;
+  font-size: 16px;
+}
+
+.prev,
+.plpause,
+.next {
+  @extend .icon;
+  font-size: 32px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: $bg2;
+}
+
+.prev:hover,
+.plpause:hover,
+.next:hover {
+  background-color: $highlight_high;
+}
+
+.mus_scale {
+  padding-top: 8px;
+  trough {
+    all: unset;
+    background-color: $bg;
+    min-height: 4px;
+    border-radius: 4px;
+  }
+  highlight {
+    all: unset;
+    background-color: $teal;
+    border-radius: 4px;
+  }
+  slider {
+    border: 0px;
+  }
+}
+
+.profile {
+  background-color: $bg1;
+  padding: 0 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.pfp {
+  background-image: url("./assets/pfp.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 64px;
+  min-width: 64px;
+  margin: 20px;
+  border-radius: 100px;
+}
+.p_name {
+  font-size: 32px;
+  font-weight: bold;
+}
+.quote {
+  padding: 5px;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.stats_container {
+  background-color: $bg1;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.scale {
+  trough {
+    all: unset;
+    background-color: $bg;
+    min-height: 16px;
+    border-radius: 4px;
+    margin-right: 25px;
+  }
+  highlight {
+    all: unset;
+    background-color: $teal;
+    border-radius: 4px;
+  }
+
+  slider {
+    border: 0px;
+  }
+}
+
+.scale-cpu {
+  @extend .scale;
+  highlight {
+    background: $orange;
+  }
+}
+.scale-mem {
+  @extend .scale;
+  highlight {
+    background: $green;
+  }
+}
+.scale-vol {
+  @extend .scale;
+  highlight {
+    background: $teal;
+  }
+}
+
+.stat_icon {
+  font-size: 24px;
+  color: $fg;
+}
+
+.info_icon {
+  font-size: 24px;
+  color: $cyan;
+}
+.info_btns {
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+.pc_info {
+  background-color: $bg1;
+  border-radius: 4px;
+  padding: 4px 48px;
+}
+
+.l_info {
+  font-size: 16px;
+}
+
+.btns {
+  background-color: $bg1;
+  border-radius: 4px;
+  padding: 8px;
+}
+.btn {
+  @extend .icon;
+  border-radius: 4px;
+  background-color: $bg2;
+  font-size: 36px;
+  transition: background-color 0.3s;
+}
+.btn:hover {
+  background-color: $teal;
+}
+
+.btn:active {
+  background-color: $teal;
+}
+
+.w_powermenu {
+  background-color: $bg1;
+  padding: 4 16px;
+  border-radius: 4px;
+}
